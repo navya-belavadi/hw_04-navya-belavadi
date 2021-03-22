@@ -1,0 +1,51 @@
+---
+title: "Homework 04: Statistical inference"
+subtitle: "Due: Friday, March 26 11:59pm ET"
+author: ""
+date: ""
+output:
+  pdf_document: default
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, message = FALSE, 
+                      warning = FALSE, comment = "#>", highlight = TRUE)
+set.seed(37073)
+```
+
+# Packages
+
+```{r packages}
+library(tidyverse)
+library(infer)
+```
+
+# Data
+
+```{r load_data}
+gifted <- read_csv("https://www.openintro.org/data/csv/gifted.csv")
+```
+
+# Exercises
+
+## Exercise 1
+
+
+
+
+## Exercise 8
+
+```{r ex_8}
+gifted %>% 
+  pivot_longer(cols      = edutv:cartoons, 
+               names_to  = "tv_type", 
+               values_to = "tv_hours")
+```
+
+
+
+# References
+
+Gallup, I. (2018). Diabetes Rates Rise in 18 States in Past Decade. 
+Gallup.com. Retrieved from 
+https://news.gallup.com/poll/243911/diabetes-rates-rise-states-past-decade.aspx
