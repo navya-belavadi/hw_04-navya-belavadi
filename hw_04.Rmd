@@ -1,8 +1,8 @@
 ---
 title: "Homework 04: Statistical inference"
 subtitle: "Due: Friday, March 26 11:59pm ET"
-author: ""
-date: ""
+author: "Navya Belavadi"
+date: "03-21-2021"
 output:
   pdf_document: default
 ---
@@ -29,7 +29,10 @@ gifted <- read_csv("https://www.openintro.org/data/csv/gifted.csv")
 # Exercises
 
 ## Exercise 1
+The sample size Gallup took in the 2016-2017 nationwide study was 337,690.
 
+## Exercise 2
+The quantity 11.5% represents the percent of the national population that was told by a doctor or a nurse that they have diabetes during 2016-2017. The quantity 10.8% represents the percent of the national population that was told by a doctor or a nurse that they have diabetes during 2008-2009.
 
 
 
