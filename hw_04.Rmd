@@ -101,7 +101,7 @@ percentile_ci
 A will have the largest interval -- despite A and B being the same size, A has a confidence interval of 90% rather than 95% which B has. This lower confidence interval means the part of the data set that is included will be less narrow since the standards are not as high. B will have the second largest interval, and C will have the smallest because of the high p value which narrows out half of the data set.
 
 ## Exercise 10
-
+Some potential consequences from a Type I error could be that a false positive would be signaled and the catheter's production would continue even if the catheters are not safe to use (the null hypothesis should not have been rejected). Potential consequences from a Type II error is that a false negative would be signaled and the product of safe catheters would halt (the null hypothesis should have been rejected). 
 
 # References
 
