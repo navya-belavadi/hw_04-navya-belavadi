@@ -29,18 +29,25 @@ gifted <- read_csv("https://www.openintro.org/data/csv/gifted.csv")
 # Exercises
 
 ## Exercise 1
-The sample size Gallup took in the 2016-2017 nationwide study was 337,690.
+The sample size Gallup took in the 2016-2017 nationwide study was 337,690 
+interviews.
 
 ## Exercise 2
 The quantity 11.5% represents the percent of the national population that was 
-told by a doctor or a nurse that they have diabetes during 2016-2017. The 
-quantity 10.8% represents the percent of the national population that was told
-by a doctor or a nurse that they have diabetes during 2008-2009.
+diagnosed by a doctor or a nurse that they have diabetes during 2016-2017. The 
+quantity 10.8% represents the percent of the national population that was 
+diagnosed by a doctor or a nurse that they have diabetes during 2008-2009.
 
 ## Exercise 3
 The 95% confidence interval for the proportion of adult individuals that have 
 diabetes is 11.3% to 11.7%, which can be determined because the margin of 
-sampling error was +/- 0.2 and the point estimate was 11.5%. 
+sampling error was +/- 0.2 and the point estimate was 11.5%. This can be 
+determined using the equation confidence interval = point estimate +/- margin of
+sampling error. 
+
+With this information, it can be known with 95% confidence that the true 
+proportion of adults that were told by a doctor or nurse that they have diabetes
+lies between 11.3% and 11.7%. 
 
 ## Exercise 4
 The 95% confidence interval for the proportion of adults with diabetes in Alaska
@@ -64,24 +71,33 @@ proportion of claims is less than 90%.
 
 ## Exercise 6
 ```{r ex_6}
-sample_p <- insurance %>%
-  count(claims) %>%
-  mutate(prop = n / sum(n)) %>%
-  filter(claims == "met") %>%
-  select(prop)
+claims <- tibble(settlement = rep(c("settled", "unsettled"), times = c(55,20)))
 
-insurance %>%
-  specify(response = claims, success = "met") %>%
-  hypothesize(null = "point", p = 0.90)%>%
-  generate(reps = 10000, type = "simulate") %>%
-  calculate(stat = "prop") %>%
-  get_p_value(obs_stat = sample_p, direction = "less") %>%
-  print(insurance)
+null_d<- claims %>%
+  specify(response = settlement, success = "settled") %>%
+  hypothesize(null = "point", p = 0.90) %>%
+  generate(reps = 10000) %>%
+  calculate(stat = "prop")
+p_hat <- claims %>%
+  count(settlement) %>%
+  mutate(prop = n / sum(n)) %>%
+  filter(settlement == "settled") %>%
+  select(prop)
+p_hat
+
+null_d %>%
+  get_p_value(obs_stat = p_hat, direction = "less")
 ```
-After using a simulations based approach, the result was a p value of 2e-04, 
-which is greater than the previously found value, but still roughly around 0. 
-Therefore, you reach the same conclusion as the previous exercise and reject the
-null hypothesis. 
+```{r}
+visualize(null_d) +
+  shade_p_value(obs_stat = p_hat, direction = "less") + coord_flip() + labs(y = 
+  "Count", y = "Sample Proportion")
+```
+After using a simulations based approach, the result was a p value of 2e-04, and
+the sample statistic value is 0.7333. Since the p value is less than the 
+significance level, the null hypothesis can be rejected and the same conclusion 
+made that the percent of claims that are settled within 30 days is less than 90%
+for the insurance company.
 
 ## Exercise 7
 ```{r ex_7}
@@ -113,8 +129,11 @@ boot <- gifted %>%
 percentile_ci <- get_ci(boot, level = 0.99)
 percentile_ci
 ```
-Based on this confidence interval, gifted children watch more educational TV on
-average than cartoons. 
+Based on this confidence interval, it can be seen with 99% confidence that the 
+true difference between gifted children watching cartoon TV and gifted children 
+watching educational TV lies in the interval between 0.743 and 1.458 in mean 
+hours. Because this true mean difference will be positive, it can be concluded 
+that gifted children spend more time watching cartoons than educational TV. 
 
 
 ## Exercise 9
@@ -126,12 +145,12 @@ and C will have the smallest because of the high p value which narrows out half
 of the data set.
 
 ## Exercise 10
-Some potential consequences from a Type I error could be that a false positive 
-would be signaled and the catheter's production would continue even if the 
-catheters are not safe to use (the null hypothesis should not have been 
-rejected). Potential consequences from a Type II error is that a false negative 
-would be signaled and the product of safe catheters would halt (the null 
-hypothesis should have been rejected). 
+Some potential consequences from a Type I error (in which a true null hypothesis
+is rejected) could be that catheters that are actually safe to use would be 
+discarded incorrectly or production halted (the null hypothesis should not have 
+been rejected). Potential consequences from a Type II error (in which a false 
+null hypothesis is failed to be rejected) is catheters which are unusable would 
+continue to be used/produced (the null hypothesis should have been rejected). 
 
 # References
 
