@@ -51,7 +51,22 @@ insurance %>%
 The point estimate is 55/75 = 0.73333, null hypothesis is p = 0.9, and the alternative hypothesis is p < 0.9. Since the p value, 7.499e-7, is less than the significance level of 0.05, the null hypothesis can be rejected. Therefore, there is sufficient evidence that the consumer group is right, and that the true proportion of claims is less than 90%.
 
 ## Exercise 6
-10,000 replications for 6
+```{r}
+sample_p <- insurance %>%
+  count(claims) %>%
+  mutate(prop = n / sum(n)) %>%
+  filter(claims == "met") %>%
+  select(prop)
+
+insurance %>%
+  specify(response = claims, success = "met") %>%
+  hypothesize(null = "point", p = 0.90)%>%
+  generate(reps = 10000, type = "simulate") %>%
+  calculate(stat = "prop") %>%
+  get_p_value(obs_stat = sample_p, direction = "less") %>%
+  print(insurance)
+```
+After using a simulations based approach, the result was a p value of 2e-04, which is greater than the previously found value, but still roughly around 0. Therefore, you reach the same conclusion as the previous exercise and reject the null hypothesis. 
 
 ## Exercise 7
 ```{r}
@@ -64,18 +79,29 @@ bootstrap_mean
 ```
 This output means that one can be 98% confident that the mean number of months until gifted children from the specified city can count to 10 is between 29 and 32.333. 
 
-
 ## Exercise 8
 
 ```{r ex_8}
-gifted %>% 
+gifted <- gifted %>% 
   pivot_longer(cols      = edutv:cartoons, 
                names_to  = "tv_type", 
                values_to = "tv_hours")
+d_hat <- gifted %>%
+  specify(tv_hours ~ tv_type) %>%
+  calculate(stat = "diff in means", order = c("edutv", "cartoons"))
+boot <- gifted %>%
+  specify(tv_hours ~ tv_type) %>%
+  generate(reps = 1000, type = "bootstrap") %>%
+  calculate(stat = "diff in means", order = c("edutv", "cartoons"))
+percentile_ci <- get_ci(boot, level = 0.99)
+percentile_ci
 ```
 
+## Exercise 9
+A will have the largest interval -- despite A and B being the same size, A has a confidence interval of 95% 
 
 
+## Exercise 10
 
 
 # References
