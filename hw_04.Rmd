@@ -48,10 +48,22 @@ insurance %>%
   prop_test(response = claims, success = "met", conf_int = FALSE, alternative = "less", z = TRUE, p = 0.9)
 ```
 
-The point estimate is 55/75 = 0.73333. 
+The point estimate is 55/75 = 0.73333, null hypothesis is p = 0.9, and the alternative hypothesis is p < 0.9. Since the p value, 7.499e-7, is less than the significance level of 0.05, the null hypothesis can be rejected. Therefore, there is sufficient evidence that the consumer group is right, and that the true proportion of claims is less than 90%.
 
 ## Exercise 6
 
+10,000 replications for 6
+
+## Exercise 7
+```{r}
+bootstrap_mean <- gifted %>%
+  specify(response = count) %>%
+  generate(reps = 10000, type = "bootstrap") %>%
+  calculate(stat = "mean") %>%
+  get_ci(level = 0.98)
+bootstrap_mean
+```
+This output means that one can be 98% confident that the mean number of months until gifted children from the specified city can count to 10 
 
 
 ## Exercise 8
@@ -63,7 +75,6 @@ gifted %>%
                values_to = "tv_hours")
 ```
 
-10,000 replications for 6
 
 
 
