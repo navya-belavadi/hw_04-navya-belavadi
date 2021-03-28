@@ -98,8 +98,7 @@ percentile_ci
 ```
 
 ## Exercise 9
-A will have the largest interval -- despite A and B being the same size, A has a confidence interval of 95% 
-
+A will have the largest interval -- despite A and B being the same size, A has a confidence interval of 90% rather than 95% which B has. This lower confidence interval means the part of the data set that is included will be less narrow since the standards are not as high. B will have the second largest interval, and C will have the smallest because of the high p value which narrows out half of the data set.
 
 ## Exercise 10
 
